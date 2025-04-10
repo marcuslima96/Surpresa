@@ -13,6 +13,7 @@
       color: #fff;
       background: linear-gradient(to top, #f3904f, #f9d423);
       height: 100%;
+      overflow: hidden;
     }
 
     body {
@@ -23,7 +24,6 @@
       min-height: 100vh;
       padding: 40px 20px;
       box-sizing: border-box;
-      overflow-y: auto;
       position: relative;
     }
 
@@ -119,13 +119,12 @@
     }
 
     .assinatura {
-      position: absolute;
+      position: fixed;
       bottom: 10px;
       right: 15px;
       font-family: 'Dancing Script', cursive;
       font-size: 1.5em;
       opacity: 0.85;
-      display: none;
     }
   </style>
 </head>
@@ -152,7 +151,7 @@
     </p>
   </div>
 
-  <div class="assinatura" id="assinatura">Marcus Lima</div>
+  <div class="assinatura">Marcus Lima</div>
 
   <script>
     window.addEventListener('load', () => {
@@ -180,20 +179,6 @@
         setTimeout(() => emoji.remove(), 5000);
       }
     }
-
-    // Mostrar assinatura ao rolar
-    window.addEventListener('scroll', () => {
-      const assinatura = document.getElementById('assinatura');
-      const scrollY = window.scrollY;
-      const alturaPagina = document.body.offsetHeight;
-      const alturaJanela = window.innerHeight;
-
-      if (scrollY + alturaJanela >= alturaPagina - 50) {
-        assinatura.style.display = 'block';
-      } else {
-        assinatura.style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>
