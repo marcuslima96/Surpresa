@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz aniversário, Sol ☀️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
@@ -24,6 +24,7 @@
       padding: 40px 20px;
       box-sizing: border-box;
       overflow-y: auto;
+      position: relative;
     }
 
     h1 {
@@ -62,9 +63,44 @@
       animation: fadeIn 2s ease-in-out;
     }
 
+    .emoji-balao, .emoji-confete {
+      position: absolute;
+      font-size: 2rem;
+      animation-timing-function: linear;
+      user-select: none;
+    }
+
+    .emoji-balao {
+      bottom: -50px;
+      animation-name: subirEmoji;
+      animation-duration: 4s;
+      animation-fill-mode: forwards;
+    }
+
+    .emoji-confete {
+      top: -30px;
+      animation-name: cairEmoji;
+      animation-duration: 3s;
+      animation-fill-mode: forwards;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes subirEmoji {
+      to {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes cairEmoji {
+      to {
+        transform: translateY(120vh);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 600px) {
@@ -81,13 +117,23 @@
         padding: 12px 24px;
       }
     }
+
+    .assinatura {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5em;
+      opacity: 0.85;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <audio id="bgAudio" autoplay loop>
     <source src="musica.mp3" type="audio/mpeg">
     Seu navegador não suporta áudio.
-  </audio>  
+  </audio>
 
   <h1>Feliz aniversário, Sol ☀️</h1>
 
@@ -96,7 +142,7 @@
     Sol, você é inteligente, sonhadora e dedicada. Você transforma palavras em mundos e livros em refúgios. É impossível não admirar o seu brilho, e a sua paixão por leitura inspira até quem prefere um bom filme de terror (tipo eu 😄).
   </p>
 
-  <button onclick="mostrarMensagem()">Clique para uma surpresa</button>
+  <button onclick="mostrarMensagemEBaloes()">Clique para uma surpresa</button>
 
   <div id="mensagemFinal">
     <p>
@@ -106,6 +152,8 @@
     </p>
   </div>
 
+  <div class="assinatura" id="assinatura">Marcus Lima</div>
+
   <script>
     window.addEventListener('load', () => {
       const audio = document.getElementById('bgAudio');
@@ -114,10 +162,38 @@
       });
     });
 
-    function mostrarMensagem() {
+    function mostrarMensagemEBaloes() {
       const mensagem = document.getElementById('mensagemFinal');
       mensagem.style.display = 'block';
+      criarEmojis('🎈', 'emoji-balao', 15);
+      criarEmojis('🎊', 'emoji-confete', 30);
     }
+
+    function criarEmojis(simbolo, classe, quantidade) {
+      for (let i = 0; i < quantidade; i++) {
+        const emoji = document.createElement('div');
+        emoji.textContent = simbolo;
+        emoji.classList.add(classe);
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 5000);
+      }
+    }
+
+    // Mostrar assinatura ao rolar
+    window.addEventListener('scroll', () => {
+      const assinatura = document.getElementById('assinatura');
+      const scrollY = window.scrollY;
+      const alturaPagina = document.body.offsetHeight;
+      const alturaJanela = window.innerHeight;
+
+      if (scrollY + alturaJanela >= alturaPagina - 50) {
+        assinatura.style.display = 'block';
+      } else {
+        assinatura.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
